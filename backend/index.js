@@ -17,7 +17,7 @@ app.use(express.json());
 
 // ✅ CORS middleware (no space in origin URL)
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"],
+  origin: ["https://ai-powered-e-commerce-website-frontend-50u5.onrender.com", "http://localhost:5174", "http://localhost:5175"],
   credentials: true
 }));
 
