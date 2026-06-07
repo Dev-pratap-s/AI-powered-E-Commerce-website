@@ -18,27 +18,36 @@ function Login() {
   const { getCurrentUser } = useContext(userDataContext);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await axios.post(
-        `${serverUrl}/api/auth/login`,
-        { email, password },
-        { withCredentials: true }
-      );
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-      console.log("login ka data hai ye",res.data);
-      toast.success("Login Successful!");
-      getCurrentUser();
+  try {
+    const res = await axios.post(
+      `${serverUrl}/api/auth/login`,
+      { email, password },
+      {
+        withCredentials: true
+      }
+    );
+
+    console.log("login ka data hai ye", res.data);
+
+    toast.success("Login Successful!");
+
+    // Cookie set hone ka wait
+    setTimeout(async () => {
+      await getCurrentUser();
       navigate("/");
-    } catch (err) {
-      console.log(err);
-      toast.error("Login Failed!");
-    } finally {
-      setLoading(false);
-    }
-  };
+    }, 500);
+
+  } catch (err) {
+    console.log(err.response?.data || err.message);
+    toast.error("Login Failed!");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className='w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-white flex flex-col items-center'>
